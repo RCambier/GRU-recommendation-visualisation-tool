@@ -1,0 +1,175 @@
+body{
+    background-color: #2b2b2b;
+}
+
+h1 {
+    font-family: roboto;
+    color: #bdbdbd;
+}
+h2, h3, h4, h5{
+    font-family: roboto;
+    color: #bdbdbd;
+}
+
+.info{
+    font-family: roboto;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    font-size: xx-large;
+    color: #903f3f;
+
+}
+
+li{
+    margin:10px;
+
+}
+
+.info_text{
+    font-family: roboto;
+    position: fixed;
+    top: 25%;
+    left: 25%;
+    width: 50%;
+    min-height: 50%;
+    padding: 0px 50px;
+    display: none;
+    border: 1px solid white;
+    min-width: 60px;
+    min-height: 20px;
+    font: 14px sans-serif;
+    color: white;
+    background: #787878;
+    pointer-events: none;
+}
+
+.title{
+    margin: 0% 2%;
+}
+.svg_div{
+    position: relative;
+    display: inline-block;
+    margin: 0% 2%;
+    vertical-align: top;
+    width: 45%;
+}
+
+.svg_div#sequence_div, .svg_div#updateGate_div, .svg_div#resetGate_div, .svg_div#candidateGate_div, .svg_div#saliency_div, .svg_div#network_image{
+    width: 94%;
+    margin: 0% 2%;
+}
+
+
+.main text {
+    font: 10px sans-serif;
+}
+
+.axis line, .axis path {
+    shape-rendering: crispEdges;
+    stroke: black;
+    fill: none;
+}
+
+circle {
+    fill: steelblue;
+}
+
+
+.svg {
+    background-color: rgba(62, 62, 62, 0.7);
+}
+
+.zone {
+   fill: rgba(234, 234, 234, 0.5);
+}
+
+#center{
+    z-index: 10;
+}
+.tip {
+    position: absolute;
+    text-align: center;
+    border: 1px solid white;
+    min-width: 60px;
+    min-height: 20px;
+    padding: 5px;
+    font: 14px sans-serif;
+    color: white;
+    background: #787878;
+    pointer-events: none;
+}
+
+path.main {
+    fill: none;
+    stroke: #ff0000;
+    stroke-width: 1.5px;
+}
+
+path.green {
+    fill: none;
+    stroke: #00ff00;
+    stroke-width: 1.5px;
+}
+
+#sliderAmount {
+    margin-right: 15px;
+}
+
+.slider, .search {
+     color: #d0d0d0;
+      background-color: #393939;
+      border-color: #eeeeee;
+      font-weight: 300;
+      font-size: 0.8vw;
+      font-family: "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+      text-decoration: none;
+      text-align: center;
+      line-height: 40px;
+      height: 40px;
+      padding: 0 3%;
+      margin: 0;
+      display: inline-block;
+      appearance: none;
+      border: none;
+      -webkit-box-sizing: border-box;
+         -moz-box-sizing: border-box;
+              box-sizing: border-box;
+      -webkit-transition-property: all;
+              transition-property: all;
+      -webkit-transition-duration: .3s;
+              transition-duration: .3s;
+}
+
+#user_search {
+    width: 100%;
+}
+
+.search{
+    width: 10%;
+}
+.line {
+   fill: none;
+  stroke: steelblue;
+  stroke-width: 2px;   
+}
+
+#current_selections{
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+    padding: 5px;
+    font: 14px sans-serif;
+    color: white;
+    background: #787878;
+    border: 1px solid white;
+    z-index: 10;
+
+}
+
+
+
+#network_img{
+    max-width: 100%;
+}
+

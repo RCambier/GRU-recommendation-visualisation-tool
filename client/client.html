@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href="css/buttons.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css"
+          href="https://fonts.googleapis.com/css?family=Roboto">
+    <meta charset="UTF-8">
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+</head>
+<body>
+    <div id ="center" style="position:fixed;top:50%;left:49%"></div>
+    <div class="svg_div svg-container" id="user_div">
+        <div class="info" linked_id="info_users"><img src="img/info.png"  style="width:20px;height:20px;" > 
+        </div>
+        <h1> Users: H state for every sequence</h1>
+        <div id="users_option">
+            <a class= "button"
+               onclick="predictionRate()">Prediction Rate</a>
+            <a class= "button"
+               onclick="highlighCurrentUser()">Show current user</a>
+            <a class= "slider">
+                TSNE Step: 
+                <span id="sliderAmount">29</span>​
+                <span>
+                    <input id="slide" type="range" min="0" max="29" step="1" value="29" onchange="updateSlider(this.value)">
+                </span>
+            </a>
+            <a class= "search" >
+                <form id="searchForm" name="search_form">
+                    <input type="text" id="user_search" placeholder="Search user">
+                </form>
+            </a>
+        </div>
+    </div>
+    <div class="svg_div svg-container" id="movie_div">
+        <div class="info" linked_id="info_movies"><img src="img/info.png"  style="width:20px;height:20px;" > </div>
+        <h1> Movies: W matrix of denselayer</h1>
+        <div id="movies_option">
+            <a class= "button"
+               onclick="resetColorSizeMovies()">Reset</a>
+            <a class= "button"
+               onclick="toggleGenre()">Genres</a>
+            <a class= "button "
+               onclick="togglePopularity()">Popularity</a>
+            <a class= "button "
+               onclick="toggleBias()">Bias</a>
+            <a class= "button "
+               onclick="togglePaths()">Toggle Paths</a>
+        </div>
+    </div>
+     
+
+    <div class="svg_div svg-container" id="sequence_div">
+        <div class="info" linked_id="info_sequences"><img src="img/info.png"  style="width:20px;height:20px;" ></div>
+        <h4> Hidden: \(h_t = (1 - u_t) \odot h_{t - 1} + u_t \odot c_t\)</h4>
+    </div>    
+    <div class="svg_div svg-container" id="saliency_div">
+    </div>
+    <div class="svg_div svg-container" id="updateGate_div">
+        <h4> Update: \(u_t = \sigma_u(x_t W_{xu} + h_{t - 1} W_{hu} + b_u)\) </h4>
+    </div>
+    <div class="svg_div svg-container" id="candidateGate_div">
+        <h4> Candidate: \(c_t = \sigma_c(x_t W_{xc} + r_t \odot (h_{t - 1} W_{hc}) + b_c)\) </h4>
+    </div>
+    <div class="svg_div svg-container" id="resetGate_div">
+        <h4> Reset: \(r_t = \sigma_r(x_t W_{xr} + h_{t - 1} W_{hr} + b_r)\) </h4>
+    </div>
+
+
+    <div class="info_text" id="info_users">
+        <h3> This represents a map of every input-sequence of the network. A step in the sequence is chosen (see TSNE Step). This step's hidden vector is a 50 dimension vector. All these 50 dimensions vectors are then mapped to 2 dimensions vectors using TSNE.</h3>
+        <ul>
+            <li><b>Cliking a circle: </b> Displays the heatmap of the H vector below. Displays the prediction values on the right panel by the radius of the dots. Displays the input movies on the right panel by red dots. Displays the next target by a green dot. </li>
+            <li><b>Prediction Rate: </b> Shows on every dot (representing a user in the test set), the sum of the prediction percentage granted by the network for the target at every step. </li>
+           <li><b>Show current user: </b> Recolors the currently selected user in red. </li>
+           <li><b>TSNE Step: </b> Select which step of the 30step sequence should be used to reduce the users to 2 dimensions </li>
+        </ul>
+    </div>
+
+
+    <div class="info_text" id="info_movies">
+        <h3> This represent a map of every movie in the network. After training, the network has created in his denselayer a weight matrix that maps every user-vector to a movie-vector that allows prediction. By taking this matrix as a vector of movies with 50 dimensions, I can reduce them to 2 dimensions using TSNE.</h3>
+        <ul>
+             <li><b>Colors: </b> Green is for the next movie target. Orange is for a target after the next one. Red is for a previous input. </li>
+            <li><b>Cliking a circle: </b> Selects this movie, in the currently selected input-step, in the currently selected user to display the saliency in the graph below. </li>
+            <li><b>Reset: </b> Put the dots back to their original color and size. </li>
+           <li><b>Genres: </b> Colors the dots with a linear combination of their genres. Using: <img src="img/color_mapping.png" style="width:250px;height:250px;"> </li>
+           <li><b>Popularity: </b> Colors the dots with the number of time the movie appears in the learning set. </li>
+           <li><b>Bias: </b> Colors the dots with the value of the movie bias in the denselayer at the output of the network. </li>
+           <li><b>Toggle Paths: </b> Toggle the views of the paths between the input movies. </li>
+
+        </ul>
+    </div>
+
+    <div class="info_text" id="info_sequences">
+        <h3> The heatmaps are representing evolution of the Hidden, Reset, Update and Candidate vectors during the execution of the sequence.</h3>
+        <ul>
+            <li><b>Clicking the Hidden Heatmap: </b> When clicking a sequence-step, it changes the top-right panel to show the predictions after the selected step. It also cahnges the current step to allow the selection of a movie during this step for the saliency graph. </li>
+            <li><b>Saliency graph: </b> In orange and white: respectively Max adn Mean of the saliency for each input relative to the selcted output.  </li>
+        </ul>
+    </div>
+
+
+
+
+    <div id="current_selections">
+        Currently selected: User: None --- Sequence: None --- Movie: None
+    </div>
+
+    <div class="svg_div svg-container" id="network_image">
+        <h1> Network visual description: </h1>
+        <div class="svg_full_network svg">
+            <img id="network_img" src="img/full_network.svg" />
+        </div>
+    </div>
+
+    <script src="http://d3js.org/d3.v4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.24.0/d3-legend.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="js/chroma.min.js"></script>
+    <script src="js/spin.min.js"></script>
+    <script src="js/main.js"></script>
+
+
+
+</body>
+</html>
